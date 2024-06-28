@@ -1,0 +1,45 @@
+{
+  "nftTable": [
+    {
+      "tokenLogo": "https://assets.coingecko.com/nft_contracts/images/188/thumb/sand.png?1636646637",
+      "tokenSymbol": "The Sandbox",
+      "tokenName": "The Sandbox",
+      "assets": 10,
+      "cost": 38.88,
+      "value": 120.36,
+      "network": "ethereum",
+      "trackedAddress": "0xdae36002431aa9394be363d3d43fbdb6de6af7cc"
+    },
+    {
+      "tokenLogo": "https://assets.coingecko.com/nft_contracts/images/48/thumb/coolcats.png?1629535240",
+      "tokenSymbol": "Cool Cats",
+      "tokenName": "Cool Cats",
+      "assets": 18,
+      "cost": 236.22,
+      "value": 576.56,
+      "network": "ethereum",
+      "trackedAddress": "0x23eb4e02c29e69452718cd5caf2255488bc7ce3a"
+    },
+    {
+      "tokenLogo": "https://assets.coingecko.com/nft_contracts/images/5/thumb/hashmasks.jpeg?1629422718",
+      "tokenSymbol": "Hashmasks",
+      "tokenName": "Hashmasks",
+      "assets": 6,
+      "cost": 6.0,
+      "value": 12.23,
+      "network": "ethereum",
+      "trackedAddress": "0xf6dcc7aed1efecee267542e26be742b7f8f095ff"
+    },
+    {
+      "tokenLogo": "https://assets.coingecko.com/nft_contracts/images/111/thumb/doge_pound.jpg?1630473734",
+      "tokenSymbol": "The Doge Pound",
+      "tokenName": "The Doge Pound",
+      "assets": 20,
+      "cost": 80,
+      "value": 270.98,
+      "network": "ethereum",
+      "trackedAddress": "0xf6dcc7aed1efecee267542e26be742b7f8f095ff"
+    }
+  ],
+  "nftTotalValue": 980.13
+}

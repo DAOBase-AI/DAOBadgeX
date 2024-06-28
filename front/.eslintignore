@@ -1,0 +1,6 @@
+**/*.js
+**/*.ts
+**/*.vue
+node_modules/
+node_modules/*
+node_modules/@kolirt/vue-web3-auth/node_modules/viem
