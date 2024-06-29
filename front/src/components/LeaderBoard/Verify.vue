@@ -46,11 +46,11 @@
         class="mt-4 md:mt-0"
         :style="isDesktop ? 'width:600px;height:600px' : ''"
       >
-        <LottieAnimation
+        <!-- <LottieAnimation
           :animationData="json"
           :height="'100%'"
           :width="'100%'"
-        ></LottieAnimation>
+        ></LottieAnimation> -->
       </div>
     </div>
   </Page>
@@ -59,7 +59,7 @@
 <script setup>
 import { reactive } from 'vue';
 import Page from '@/components/Page.vue';
-import { json } from '@/assets/lottie/data2.js';
+// import { json } from '@/assets/lottie/data2.js';
 import BackBtn from '@/components/BackBtn.vue';
 import { useRoute } from 'vue-router';
 import { twVerify, twVerifyByPath } from '@/api/dao';
