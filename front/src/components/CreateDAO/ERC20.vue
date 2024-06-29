@@ -119,7 +119,6 @@ export default defineComponent({
     ...mapActions('erc20', ['fetchTokenInfo']),
     ...mapMutations('form', ['setStakingBase']),
     async getTokenInfo() {
-      // TODO 这里缺一个校验
       await this.fetchTokenInfo({
         token: this.address,
       });

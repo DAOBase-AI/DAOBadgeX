@@ -823,17 +823,6 @@ const doDeploy = withThrottling(
   ),
 );
 
-/*
-  0 -> 部署中
-  1 -> 部署完成
-  2 -> 部署失败
-  3 -> 未到部署时间
-  4 -> 已到部署时间未部署
-  5 -> 未创建pass
-
-
- */
-
 const isDeploying = computed(() => props.info.status == 0);
 const isDeployed = computed(() => state.isDeployed);
 const isDeployFailed = computed(() => props.info.status == 2);

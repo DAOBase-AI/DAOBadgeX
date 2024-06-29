@@ -54,7 +54,6 @@ import { useDesktop } from '@/hooks';
 
 const isDesktop = useDesktop();
 
-// TODO 需要区分 success 和 error
 </script>
 
 <style scoped>

@@ -1180,37 +1180,8 @@ const doSave = async () => {
   }
 };
 
-// const saveBase64AsFile = async (base64, fileName) => {
-//   // 移除 base64 字符串中的头部信息（如果有的话）
-//   const base64Data = base64.replace(/^data:image\/png;base64,/, "");
-
-//   // 将 base64 转换为 Blob
-//   const byteCharacters = atob(base64Data);
-//   const byteNumbers = new Array(byteCharacters.length);
-//   for (let i = 0; i < byteCharacters.length; i++) {
-//     byteNumbers[i] = byteCharacters.charCodeAt(i);
-//   }
-//   const byteArray = new Uint8Array(byteNumbers);
-//   const blob = new Blob([byteArray], {type: 'image/png'});
-
-//   // 创建下载链接
-//   const link = document.createElement('a');
-//   link.href = URL.createObjectURL(blob);
-//   link.download = fileName;
-
-//   await updateBadge();
-
-//   // 模拟点击下载
-//   link.click();
-
-//   // 清理 URL 对象
-//   URL.revokeObjectURL(link.href);
-// }
-
 async function processAndSaveBase64AsFile(base64, fileName) {
-  // 移除 base64 字符串中的头部信息（如果有的话）
   const base64Data = base64.replace(/^data:image\/png;base64,/, "").replace(/^data:image\/jpeg;base64,/, "");
-  // 将 base64 转换为 Blob
   const byteCharacters = atob(base64Data);
   const byteNumbers = new Array(byteCharacters.length);
   for (let i = 0; i < byteCharacters.length; i++) {
@@ -1218,11 +1189,9 @@ async function processAndSaveBase64AsFile(base64, fileName) {
   }
   const byteArray = new Uint8Array(byteNumbers);
   const blob = new Blob([byteArray], {type: 'image/png'});
-  // 创建 FormData 对象
   const formData = new FormData();
   formData.append('file', blob, fileName);
   try {
-    // 发送请求到后端 API
     const resData = await fetch(`https://api.daobase.ai/user/uploadFile?address=${store.state.user.address}`, {
       method: 'POST',
       body: formData
@@ -2012,14 +1981,14 @@ body {
   transform: rotate3d(0, 1, 0, 180deg);
   -ms-transform: rotate3d(0, 1, 0, 180deg); /* IE 9 */
   -moz-transform: rotate3d(0, 1, 0, 180deg); /* Firefox */
-  -webkit-transform: rotate3d(0, 1, 0, 180deg); /* Safari 和 Chrome */
+  -webkit-transform: rotate3d(0, 1, 0, 180deg); /* Safari & Chrome */
   z-index: 8;
 }
 .card-flip .back {
   transform: rotate3d(0, 1, 0, 0deg);
   -ms-transform: rotate3d(0, 1, 0, 0deg); /* IE 9 */
   -moz-transform: rotate3d(0, 1, 0, 0deg); /* Firefox */
-  -webkit-transform: rotate3d(0, 1, 0, 0deg); /* Safari 和 Chrome */
+  -webkit-transform: rotate3d(0, 1, 0, 0deg); /* Safari & Chrome */
   z-index: 10;
 }
 

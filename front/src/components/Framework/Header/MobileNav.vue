@@ -190,7 +190,6 @@ const jump = (item) => {
   }, 300);
 };
 
-// TODO 原来登录的时候是刷新页面，现在可能就是要更新状态
 const mSignin = useSigninCheck();
 const signIn = withThrottling(async () => {
   try {

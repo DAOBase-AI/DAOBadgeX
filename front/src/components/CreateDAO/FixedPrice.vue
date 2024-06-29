@@ -324,13 +324,6 @@ import Button from '@/components/Button.vue';
 import { uploadWhiteExcel } from '@/api/common';
 import { withThrottling } from '@/utils/with';
 
-/*
-  TODO 对于这里的平台行为
-    - 选择是否无穷，会加上对应的判断处理
-    - 时间处理 -> 选择一个确定失效时间，以及选择多少个月后失效
-    - 安排一个创建时间
- */
-
 export default defineComponent({
   data: () => ({
     open: false,

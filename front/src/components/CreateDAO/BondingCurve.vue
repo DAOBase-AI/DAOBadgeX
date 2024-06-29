@@ -164,8 +164,6 @@ import mitt from '@/libs/event';
 import BigNumber from 'bignumber.js';
 import PlatformFee from './PlatformFee.vue';
 
-// TODO 这里 m 不再存在，并且没有它具体的实际意义
-
 export default defineComponent({
   name: 'ClaimBondingCurve',
   data: () => ({

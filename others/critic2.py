@@ -6,16 +6,10 @@ from tool.clickhouse import DataBaseHandle as ch_DataBaseHandle
 from pandas import DataFrame
 
 
-"""采用CRITIC法确定用户的权重，从信息完善度，参与dao数量，创建提案数量，参与投票次数，受到委托次数，参与dao综合评分等六个
-   方面确定；没有定义操作clickhouse的库，其在服务器上已经定义好；代码以服务器的为准
-"""
-
-
 parameters = {"host": "database-2.chp3rojpib7v.ap-east-1.rds.amazonaws.com", "username": "admin",
               "password": "cGaeFsDKwWZVQWr", "database": "bhousedao_prod", "port": 3306}
 mysql = DataBaseHandle(**parameters)
 
-# 基础信息完善度 addr: 73583
 sql_statement1 = """select addr, 
                     if(name is null, 0, 1) + if(avatar_url is null, 0, 1) + if(banner_url is null, 0, 1)
                     + if(description is null, 0, 1) + if(skills is null, 0, 1) + if(tag is null, 0, 1) 
@@ -28,7 +22,6 @@ result = mysql.select_db(sql_statement1)
 data = DataFrame.from_records(result, columns=["addr", "completeness"])
 del result
 
-# 参与DAO数量 member_address: 6134452
 sql_statement2 = """select member_address as addr, count(distinct dao_id)
                     from dao_proposal_member
                     group by 1"""
@@ -38,7 +31,6 @@ del result
 data2 = data2.merge(data, how='outer', on='addr')
 del data
 
-# 创建提案数量 author: 141438
 ch_statement = """select author as addr, count(id) as proposals
                     from dao_proposal
                     group by addr"""
@@ -47,7 +39,6 @@ data = clickhouse.select_db(ch_statement)
 data2 = data2.merge(data, how='outer', on='addr')
 del data
 
-# 参与投票次数 voter_address: 6106440
 ch_statement2 = """select voter_address as addr, count(id) as votes
                     from dao_proposal_voter
                     group by addr"""
@@ -55,7 +46,6 @@ data = clickhouse.select_db(ch_statement2)
 data2 = data2.merge(data, how='outer', on='addr')
 del data
 
-# 受到委托次数 delegate: 127408
 sql_statement5 = """select receiver as addr, count(*)
                     from dao_proposal_delegation
                     group by 1"""
@@ -64,17 +54,6 @@ data = DataFrame.from_records(result, columns=["addr", "delegations"])
 del result
 data2 = data2.merge(data, how='outer', on='addr')
 del data
-#mysql.close_db()
-
-# voting power加权 voter: 6106588
-#ch_statement3 = """SELECT voter_address as addr, round(avg(score / NULLIF(total_score, 0)),3) AS voting_power_ratio
-#                  FROM dao_proposal_voter
-#                  LEFT JOIN
-#                  (SELECT dao_proposal_id, sum(score) AS total_score
-#                   FROM dao_proposal_voter
-#                   GROUP BY dao_proposal_id) AS subquery USING (dao_proposal_id)
-#                   where total_score > 0
-#                  GROUP BY addr"""
 
 ch_statement3 = """SELECT voter_address as addr,dao_id, score/total_score as score_ratio
                    from (
@@ -163,18 +142,7 @@ X = data2[["completeness", "daos", "proposals", "votes", "delegations", "voting_
 del data2
 X_norm = (X - X.min(axis=0)) / (X.max(axis=0) - X.min(axis=0))
 del X
-""" CRITIC法
-sigma = std(X_norm, axis=0)
-R = sum(1 - corrcoef(X_norm.T), axis=0)
-C = sigma * R
-weights = C / sum(C)
-"""
-""" 熵值法
-from numpy import log, sum
-P = X_norm/X_norm.sum(axis=0)+0.001
-e = 1+1/log(len(P[0]))*sum(P*log(P), axis=0)
-weights = e/sum(e)
-"""
+
 from numpy import mean
 cov = std(X_norm, axis=0)/mean(X_norm, axis=0)
 weights = cov/cov.sum()
@@ -186,4 +154,4 @@ mysql.insert_db(sql_statement, weights.tolist())
 mysql.close_db()
 
 print(["completeness", "daos", "proposals", "votes", "delegations", "market_cap"])
-print("权重: ", weights)
+print("weights: ", weights)

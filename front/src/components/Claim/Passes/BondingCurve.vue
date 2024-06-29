@@ -352,7 +352,6 @@ export default defineComponent({
         this.slippage = '5';
       }
     },
-    /* 对应的 PASS 选择 */
     onModeChange(val: number) {
       this.mode = val;
     },
@@ -424,7 +423,6 @@ export default defineComponent({
       }
       this.sellPassList = res;
     },
-    /* 输入完，左侧会显示不一样的地方... */
     async onSellAmountChange(this: any, e: any) {
       const value = Math.floor(+e.target.value);
       const network = this.dao.network;

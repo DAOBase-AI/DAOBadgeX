@@ -19,7 +19,7 @@ export const uploadImg = async (file: File): Promise<any> => {
   const res = await client.send(
     new PutObjectCommand({
       ACL: 'public-read',
-      Bucket: AWS_BUCKET /* 从 precess 中读取 */,
+      Bucket: AWS_BUCKET,
       Body: file,
       Key: fileName,
       ContentType: 'image/png',

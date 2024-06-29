@@ -5,8 +5,6 @@
     <div class="h-80 mt-4 opacity-40 box-bg" v-if="dao.loading">
       <Skeletor height="100%"></Skeletor>
     </div>
-
-    <!-- 这里需要一个Tab功能 -->
     <PureTabs
       class="mt-6"
       :tabs="['CLAIM', 'REDEEM']"

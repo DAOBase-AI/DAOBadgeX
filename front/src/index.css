@@ -229,7 +229,6 @@ input {
   height: 2px;
   background: linear-gradient(90deg, #831828 0%, rgba(131, 24, 40, 0.2) 100%);
 }
-/* border-linear 不能作为单边元素显示 */
 
 .wrapper-btn:hover {
   text-shadow: 0px 0px 7px rgba(255, 255, 255, 0.85);

@@ -23,12 +23,10 @@ export const withOwnPass = (): any => {
       }
     } catch (error) {
       console.log(error);
-      //   TODO 执行错误的提示
     }
   };
 };
 
-// TODO 未登录就是游客
 export const withVisitor = (behavior: any) => {
   return function (): void {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

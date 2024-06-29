@@ -183,7 +183,6 @@ export const getBackFixedTokenAddress = (
   network: string,
 ): string =>
   FIXED_PRICE_OPTIONS_BY_NETWORK(BackNetworkType[network])[tokenName].address;
-// roleId = 2 有3个状态 观众、游客、机器人
 
 export const getNetworkText = (network: string) => {
   return NetworkType[network];
@@ -681,7 +680,7 @@ export const jumpTx = (network: string, address: string) => {
 
 export const fmoney = (s: number, n: number) => {
   // const nn = n <= 20 ? n : 2;
-  var ss: any = parseFloat((s + '').replace(/[^\d\.-]/g, '')); //转换成字符串，过滤非数字、.号和负号
+  var ss: any = parseFloat((s + '').replace(/[^\d\.-]/g, ''));
   ss = n > 0 ? ss.toFixed(n) + '' : ss + '';
   var num = ss.indexOf('.') > -1 ? ss.split('.')[0] : ss;
   var l = num.split('').reverse(),

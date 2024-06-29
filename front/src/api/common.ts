@@ -194,8 +194,6 @@ export const queryHomeDaoRank = async (
     assetDistribution,
   } = res.data;
 
-  // TODO 对 daoHistoryRank 的操作处理
-
   const x = assetDistribution.map((x: any) => ({
     assetType: x.assetType,
     totalValueUsd: +(+x.totalValueUsd).toFixed(2),

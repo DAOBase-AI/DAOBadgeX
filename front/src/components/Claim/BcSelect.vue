@@ -54,7 +54,6 @@
 </template>
 
 <script setup>
-// TODO 如何操作处理呢？
 import {
   computed,
   defineProps,
@@ -115,21 +114,20 @@ onMounted(() => {
   updateList(props.list, props.selected);
 });
 
-/* 更新依赖列表 */
 watch(
   () => props.list,
   (val) => {
     state.passList = val || [];
   },
 );
-/* 更新显示列表 */
+
 watch(
   () => [props.list, props.selected],
   (val) => {
     updateList(...val);
   },
 );
-/* 更新多选 */
+
 watch(
   () => props.mul,
   (flag) => {

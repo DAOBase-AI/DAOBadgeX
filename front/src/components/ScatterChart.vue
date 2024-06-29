@@ -98,7 +98,6 @@ use([
   MarkLineComponent,
 ]);
 
-// TODO 选择对应的 artwork 的时候显示对应的值
 const flags = computed(() => {
   const single = state.source.map((list) =>
     list.filter((item) => item.type === 0),

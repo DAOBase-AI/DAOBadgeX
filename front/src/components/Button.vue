@@ -108,7 +108,6 @@ const isSm = computed(() => props.size === 'sm');
 const isMd = computed(() => props.size === 'md');
 const isLg = computed(() => props.size === 'lg');
 
-// TODO 操作...处理...
 </script>
 
 <style scoped>

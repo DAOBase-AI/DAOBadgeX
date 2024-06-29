@@ -562,8 +562,6 @@ const actions: ActionTree<DAOState, any> = {
         }
       }
 
-      /* bongdingCurve 其实还需要5个参数 CurrentPrice Reserve CurveIssuance Balance PassBalance */
-
       if (state.claimDAO.name === name && needLoading) {
         state.claimDAO.loading = false;
       }

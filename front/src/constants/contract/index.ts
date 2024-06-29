@@ -407,7 +407,6 @@ export const getMaximumCost = async (
   amount: string,
   decimals: number,
 ): Promise<string> => {
-  // TODO 操作...
   const bondingCurve = bondingCurveContract(address);
   const cost = await bondingCurve.getCurrentCostToMint(amount);
   return new BigNumber(cost.toString())
@@ -463,16 +462,6 @@ export const getFactoryContract = async (passType: string) => {
 
 const getUri = (name: string, daoName: string) =>
   `${process.env.VUE_APP_BASEURI}/${name.replace(/ /g, '-')}/`;
-
-/*
-  新增控制参数
-    - repeatMintNum
-        默认大于0
-    - mintDeadlineTime
-        自定义 mint 截止时间，参数等于0代表不开启截止时间，大于0代表开启截止时间 以秒为单位
-    - isNotWhitelist
-        是否开启白名单机制 false/true
- */
 
 export const getFactoryMethods = async (
   type: string,
@@ -690,7 +679,6 @@ export const getFactoryMethods = async (
     const base = new BigNumber('10').pow(new BigNumber(decimals));
     // const rate = new BigNumber(bond_rate).multipliedBy(base).toString();
     const m = new BigNumber(bond_m).multipliedBy(base).toString();
-    /* n 只能是整数 */
     // const n = new BigNumber(bond_n).multipliedBy(base).toString();
     const price = new BigNumber(bond_init_price).multipliedBy(base).toString();
 

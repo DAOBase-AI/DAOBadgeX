@@ -27,12 +27,10 @@ class HttpRequest {
   }
 
   interceptors(instance: AxiosInstance, url: string): any {
-    // 请求拦截
     instance.interceptors.request.use(
       (config: any) => {
-        // 添加全局的loading...
         if (!Object.keys(this.queue).length) {
-          // Spin.show() // 不建议开启，因为界面不友好
+          // Spin.show() 
         }
         this.queue[url] = true;
         return config;
@@ -42,13 +40,11 @@ class HttpRequest {
       },
     );
 
-    // 响应拦截
     instance.interceptors.response.use(
       (res: any) => {
         this.destroy(url);
         const { data } = res;
         if (typeof data === 'object') {
-          // 自己处理
           if (data.result) {
             return data.result;
           }

@@ -61,9 +61,6 @@
                 :value="props.info.content"
               >
               </ContentView>
-              <!-- <div>
-              附件 Moon and Sixpence
-            </div> -->
               <div v-if="props.info.imagesList.length > 0" class="mt-4">
                 <ImgBox :imgs="props.info.imagesList"></ImgBox>
               </div>
@@ -195,14 +192,11 @@ const clickShare = () => {
 const doTop = async (info) => {
   await topSquad(info.id, props.isMine ? 'user' : 'admin');
   emits('top');
-  /* 刷新列表 */
 };
 
 const doDelete = async (info) => {
   await delSquad(info.id);
   emits('del');
-
-  /* 刷新列表 */
 };
 
 const onPublished = async () => {

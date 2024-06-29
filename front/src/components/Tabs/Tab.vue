@@ -34,7 +34,6 @@ onBeforeMount(() => {
   checkActive($parentState.selectedIndex);
 });
 
-// TODO 可以监听父元素的状态来进行操作
 watch(() => $parentState.selectedIndex, checkActive);
 </script>
 

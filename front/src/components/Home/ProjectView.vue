@@ -68,10 +68,6 @@ import { queryDAOPage } from '@/api/dao';
 import { useRouter } from 'vue-router';
 import { Skeletor } from 'vue-skeletor';
 
-/*
-    TODO 还差一个loading...
- */
-
 const $router = useRouter();
 
 const state = reactive({

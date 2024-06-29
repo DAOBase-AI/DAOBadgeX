@@ -120,7 +120,7 @@ export const PlaceHolderImage =
   'https://common-1258125078.cos.ap-shanghai.myqcloud.com/placeholder.png';
 
 export const rules = {
-  /* [0-9a-zA-Z] $-_.+!*'(), 空格 */
+  /* [0-9a-zA-Z] $-_.+!*'(), space */
   isNormalStr: (value: string): boolean => {
     return /^[0-9a-zA-Z $.+!*'()_-]+$/.test(value);
   },

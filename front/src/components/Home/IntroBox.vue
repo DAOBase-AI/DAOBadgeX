@@ -114,7 +114,6 @@ const calcSplit = () => {
   state.splitYs = res;
 };
 
-/* TODO 目前就是用来更换随便一种背景颜色 来处理吧 */
 const onMouseMove = (e) => {
   if (!state.hover) {
     state.hover = true;

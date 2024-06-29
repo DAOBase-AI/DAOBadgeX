@@ -24,7 +24,6 @@ module.exports = defineConfig({
     //   }),
     // );
     if (process.env.NODE_ENV === 'production') {
-      //生产包取消console debugger打印
       // config.optimization.minimizer[0].options.terserOptions.compress.drop_console = true;
       // config.optimization.minimizer[0].options.terserOptions.compress.drop_debugger = true;
     } else {

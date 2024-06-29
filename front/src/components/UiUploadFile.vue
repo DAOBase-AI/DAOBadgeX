@@ -230,7 +230,6 @@ const onDrop = (e) => {
   uploadFile(e.dataTransfer.files[0]);
 };
 
-// TODO 这里需要传递到外边去取消 excelId
 const onDelete = (e) => {
   e.stopPropagation();
   state.fileConfig = null;

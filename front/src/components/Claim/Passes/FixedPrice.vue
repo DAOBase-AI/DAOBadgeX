@@ -322,8 +322,6 @@ export default defineComponent({
 
       return true;
     },
-
-    // TODO 这里需要判断 mint 次数 和 是否在白名单
     doApprove: withThrottling(
       withWalletFlow(async function (this: any) {
         try {

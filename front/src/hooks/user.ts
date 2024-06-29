@@ -14,13 +14,6 @@ import {
 } from '@/utils/tezosWallet';
 import { LOCALSTORAGE_WALLET_TYPE } from '@/constants/walletTypes';
 
-/* wallet */
-// 目前仅支持metamask
-// 判断用户有没有下载 metamask
-
-// TODO 气死我们也不需要那个库，如果钱包没有安装就提示用户去下载就好了，没必要一直阻塞这段代码
-// TODO 用户安装了钱包自己进行再次点击链接就好了
-
 const doNetwork = (store: any, chainId?: string) => {
   if (!chainId) {
     store.commit('wallet/setChainId', '');
@@ -92,7 +85,6 @@ export const doLogin = async (
       nonce,
       signature,
       walletType: isTezos ? 'Beacon' : (isCoinbase ? 'Coinbase' : undefined),
-      // 唯一能绑定邀请关系位置是 mintBadge 弹框
       inviteCode: '',
     });
     console.log('signLogin::', res);

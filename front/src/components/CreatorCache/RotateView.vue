@@ -141,7 +141,6 @@ const startTween = (t1, t2, t3, r) => {
 };
 
 onMounted(() => {
-  // TODO 启动动画
   requestAnimationFrame(animate);
 
   startTween(
@@ -167,7 +166,6 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  // TODO 注销动画
   tweens.forEach((x) => {
     x.stop();
   });

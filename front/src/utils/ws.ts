@@ -30,7 +30,6 @@ export default class TownhallWs {
   }
 
   reconnect(onLoad: any) {
-    /* 操作 */
     this.ws = new WebSocket(`${process.env.VUE_APP_WS_URL}/${this.uid}`);
     this.ws.onopen = () => {
       if (this.inited) {
@@ -59,7 +58,6 @@ export default class TownhallWs {
     };
 
     this.ws.onerror = (error: any) => {
-      /* 错误回调 */
       console.log(error);
     };
     this.ws.onmessage = (event: any) => {

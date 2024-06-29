@@ -89,11 +89,6 @@ import {
 } from '@headlessui/vue';
 import { CheckIcon, ChevronDownIcon } from '@heroicons/vue/solid';
 
-/* 
-    selectedContract -> 该如何处理
- */
-
-// TODO 该如何处理呢？
 const props = defineProps({
   modelValue: Object,
   name: String,
@@ -101,7 +96,6 @@ const props = defineProps({
   type: {
     type: String,
     validator: () => {
-      /* 操作... */
       return true;
     },
   },

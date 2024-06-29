@@ -113,15 +113,6 @@ const doSquad = () => {
   $router.push(`/squad/${props.info.daoName}`);
 };
 
-/*
-  TODO 没有无效
-    NFT-BASE/TOKEN-BASE REDEEM/SQUAD
-    FixedPrice SQUAD
-    BondingCurve SELL/SQUAD
-
-    只有 fixedprice 有有效期，过期就盖一个蒙版
-    Flag 标记全部都是红色
- */
 </script>
 
 <style scoped>

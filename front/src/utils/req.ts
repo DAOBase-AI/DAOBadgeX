@@ -29,13 +29,10 @@ class HttpRequest {
     return config;
   }
 
-  //   TODO 配置 HTTP 请求~
   setupAxios(): void {
     this.axios.interceptors.request.use(
       (config: any) => {
-        // 添加全局的loading...
         if (!Object.keys(this.queue).length) {
-          // Spin.show() // 不建议开启，因为界面不友好
         }
         this.queue[config.url] = true;
         return config;
@@ -48,7 +45,6 @@ class HttpRequest {
         this.destroy(res.config.url);
         const { data } = res;
         if (typeof data === 'object') {
-          // 自己处理
           if (data.result) {
             return data.result;
           }

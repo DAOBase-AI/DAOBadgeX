@@ -264,23 +264,6 @@ const addressText = computed(() => {
 });
 const chainx = useNetwork();
 
-// const mSignin = useSigninCheck();
-// const signIn = withThrottling(async () => {
-//   state.loading = true;
-//   aniCtrl.value.resume(1);
-//   aniCtrl.value.replay();
-//   try {
-//     // TODO 这里要区分钱包选择，然后再进行对应的事件调用，
-//     // 所以 dialog 也需要有一个回调的状态，才能结束这里的状态
-//     await mSignin();
-//   } catch (error) {
-//     console.log("mSignin error::", error);
-//   }
-//   aniCtrl.value.pause();
-//   aniCtrl.value.setProgress(0);
-//   state.loading = false;
-// });
-
 const copyAddress = () => {
   if (copy(userInfo.value.address)) {
     notify({

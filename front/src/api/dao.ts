@@ -43,7 +43,7 @@ interface PassBondingCurve {
 interface PassFixedPrice {
   network: Network;
   passContractType: string;
-  termOfValidity: string /* 月 */;
+  termOfValidity: string;
   quantity: string;
   payment: string;
   payWIth: string;
@@ -442,7 +442,6 @@ export const queryFtAssets = async (daoId: string): Promise<FtAssets> => {
   return x;
 };
 
-// TODO 只创建 DAO
 export const onlyCreateDao = (params: any): Promise<any> =>
   getSuccessResultAsync(passHttp.post('/daos/createDaoNoPass', params));
 export const updateProfile = (params: any): Promise<any> =>
@@ -569,7 +568,6 @@ export const queryDashbaordChat = async (
   return res;
 };
 
-// 查询 dashboard 基础信息
 export const queryDashboardInfo = async (
   daoId: string | number,
   includeOwnAssets = true,
@@ -835,8 +833,6 @@ export const queryLeaderBoardList = ({
           orderType: 'desc',
           /* treasury/nftVault/ftVault/followers */
           orderItem: 'treasury',
-
-          /* 0：已验证  1：未验证 ，空：查询所有 */
           ...options,
           chain: chainValue,
         },
