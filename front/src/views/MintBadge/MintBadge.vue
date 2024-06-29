@@ -266,9 +266,7 @@
                 class="flex-1 dataItem flex flex-col justify-center items-center"
                 style="background: #3c1f3a"
               >
-                <label class="text-white-060 dataLabel"
-                  >Participate in DAOs</label
-                >
+                <label class="text-white-060 dataLabel">Related DAOs</label>
                 <span class="text-whitebase dataNum">{{
                   state.nftData.relatedDaos
                 }}</span>
@@ -308,7 +306,45 @@
                 class="flex-1 dataItem flex flex-col justify-center items-center"
                 style="background: #6c2d3c"
               >
-                <label class="text-white-060 dataLabel">Create Proposals</label>
+                <label class="text-white-060 dataLabel">Votes</label>
+                <span class="text-whitebase dataNum">{{
+                  state.nftData.votes
+                }}</span>
+                <div
+                  v-if="state.isMinted && !state.mintStateLoading"
+                  class="w-full mintedDataInfo"
+                >
+                  <div
+                    class="mintedDataInfoItem flex items-center justify-between box-border"
+                  >
+                    <label class="mintedDataInfoLabel text-white-040"
+                      >Rank:</label
+                    >
+                    <span class="mintedDataInfoValue text-whitebase"
+                      >{{ fmoney(state.rankScoreData.votesRank, 0) }} ({{
+                        (
+                          Number(state.rankScoreData.votesRankRatio || 0) * 100
+                        ).toFixed(2)
+                      }}%)</span
+                    >
+                  </div>
+                  <div
+                    class="mintedDataInfoItem flex items-center justify-between box-border"
+                  >
+                    <label class="mintedDataInfoLabel text-white-040"
+                      >Weight:</label
+                    >
+                    <span class="mintedDataInfoValue text-whitebase">{{
+                      state.rankScoreData.votesWeight.toFixed(2)
+                    }}</span>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="flex-1 dataItem flex flex-col justify-center items-center"
+                style="background: #3c1f3a"
+              >
+                <label class="text-white-060 dataLabel">Proposals</label>
                 <span class="text-whitebase dataNum">{{
                   state.nftData.createdProposals
                 }}</span>
@@ -349,47 +385,9 @@
               </div>
               <div
                 class="flex-1 dataItem flex flex-col justify-center items-center"
-                style="background: #3c1f3a"
-              >
-                <label class="text-white-060 dataLabel">Vote</label>
-                <span class="text-whitebase dataNum">{{
-                  state.nftData.votes
-                }}</span>
-                <div
-                  v-if="state.isMinted && !state.mintStateLoading"
-                  class="w-full mintedDataInfo"
-                >
-                  <div
-                    class="mintedDataInfoItem flex items-center justify-between box-border"
-                  >
-                    <label class="mintedDataInfoLabel text-white-040"
-                      >Rank:</label
-                    >
-                    <span class="mintedDataInfoValue text-whitebase"
-                      >{{ fmoney(state.rankScoreData.votesRank, 0) }} ({{
-                        (
-                          Number(state.rankScoreData.votesRankRatio || 0) * 100
-                        ).toFixed(2)
-                      }}%)</span
-                    >
-                  </div>
-                  <div
-                    class="mintedDataInfoItem flex items-center justify-between box-border"
-                  >
-                    <label class="mintedDataInfoLabel text-white-040"
-                      >Weight:</label
-                    >
-                    <span class="mintedDataInfoValue text-whitebase">{{
-                      state.rankScoreData.votesWeight.toFixed(2)
-                    }}</span>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="flex-1 dataItem flex flex-col justify-center items-center"
                 style="background: #6c2d3c"
               >
-                <label class="text-white-060 dataLabel">Delegate</label>
+                <label class="text-white-060 dataLabel">Delegations</label>
                 <span class="text-whitebase dataNum">{{
                   state.nftData.delegations
                 }}</span>
@@ -431,7 +429,7 @@
                 style="background: #3c1f3a"
               >
                 <label class="text-white-060 dataLabel"
-                  >Voting weight valuation</label
+                  >Voting Power Valuation</label
                 >
                 <span class="text-whitebase dataNum">
                   ${{
@@ -820,6 +818,7 @@
                   <div v-if="state.showFlip" class="card-front"></div>
                   <div v-if="state.showFlip" class="card-back"></div>
                   <iframe
+                    id="myIframe"
                     :src="iframeUrl320"
                     frameborder="0"
                     width="320"
@@ -827,13 +826,7 @@
                   ></iframe>
                 </div>
                 <div class="absolute bottom-0 w-full h-15">
-                  <!-- <button
-                    class="absolute bottom-3 left-28 buttonShare flex items-center space-x-2 text-xs font-bold text-mb-blue px-4 p-2"
-                    @click="shareTweets"
-                  >
-                    <i class="iconfont icon-fenxiang2" />
-                    <span>Share</span>
-                  </button> -->
+                  <span class="absolute bottom-3 right-32 text-black">Share on:</span>
                   <button
                     class="absolute bottom-3 right-18 buttonShare flex items-center space-x-2 text-xs font-bold px-4 p-2"
                     @click="shareTweets"
@@ -954,7 +947,7 @@ import { mittContractBadge, mittLoading } from '../../libs/event';
 import Cypher from './Cypher.vue';
 import Footer from '@/components/Framework/Footer.vue';
 // import BigNumber from 'bignumber.js';
-import UiInput from '@/components/CreateFlow/UiInput.vue';
+import UiInput from '@/views/CreateFlow/component/UiInput.vue';
 import Multiselect from '@vueform/multiselect';
 import { SkillOptions, contracts, chains } from '@/constants/index';
 import { balanceOfBadge, mintBadge } from '@/constants/contract';
@@ -972,32 +965,37 @@ import { fmoney, isMobilePage } from '@/utils/index';
 import Spin from '@/components/Spin.vue';
 import { useNetwork } from '@/hooks';
 import dayjs from 'dayjs';
-import { isInvitationCodeBound, startTask } from '@/api/user';
+import { isInvitationCodeBound, startTask, updateBadge } from '@/api/user';
 import { useStore } from 'vuex';
 import { formatVal } from '@/utils';
 import { useRouter } from 'vue-router';
-import { writeContracts } from '@wagmi/core/experimental';
 import { smartWalletConfig } from '@/config/smartWallet';
+import { writeContracts } from '@wagmi/core/experimental';
+import { switchChain, writeContract } from '@wagmi/core';
+import { base } from '@wagmi/core/chains';
+import { useConnect } from '@wagmi/vue';
+import html2canvas from 'html2canvas';
+import domtoimage from 'dom-to-image';
 
+const { connectors } = useConnect();
 const $router = useRouter();
 const store = useStore();
 
-const iframeUrl150 = `/badge/150.html?wallet=${store.state.user.address}`;
-const iframeUrl320 = `/badge/320.html?wallet=${store.state.user.address}`;
-const iframeUrl462 = `/badge/462-gray.html?wallet=${store.state.user.address}`;
+const iframeUrl320 = `/badge/320.html?scoremode=static&wallet=${store.state.user.address}`;
+const iframeUrl462 = `/badge/462-gray.html?scoremode=static&wallet=${store.state.user.address}`;
 
 const network = useNetwork();
 const isMobile = isMobilePage();
 
 const walletType = getWalletType();
 
-const badgeAddress = "0x7721693d0529199d4B68aB4c00f1213b16092Bf9";
+const badgeAddress = '0x7721693d0529199d4B68aB4c00f1213b16092Bf9';
 const badgeABI = [
   {
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
     inputs: [],
-    name: "safeMint",
+    name: 'safeMint',
     outputs: [],
   },
 ];
@@ -1182,6 +1180,90 @@ const doSave = async () => {
   }
 };
 
+// const saveBase64AsFile = async (base64, fileName) => {
+//   // 移除 base64 字符串中的头部信息（如果有的话）
+//   const base64Data = base64.replace(/^data:image\/png;base64,/, "");
+
+//   // 将 base64 转换为 Blob
+//   const byteCharacters = atob(base64Data);
+//   const byteNumbers = new Array(byteCharacters.length);
+//   for (let i = 0; i < byteCharacters.length; i++) {
+//     byteNumbers[i] = byteCharacters.charCodeAt(i);
+//   }
+//   const byteArray = new Uint8Array(byteNumbers);
+//   const blob = new Blob([byteArray], {type: 'image/png'});
+
+//   // 创建下载链接
+//   const link = document.createElement('a');
+//   link.href = URL.createObjectURL(blob);
+//   link.download = fileName;
+
+//   await updateBadge();
+
+//   // 模拟点击下载
+//   link.click();
+
+//   // 清理 URL 对象
+//   URL.revokeObjectURL(link.href);
+// }
+
+async function processAndSaveBase64AsFile(base64, fileName) {
+  // 移除 base64 字符串中的头部信息（如果有的话）
+  const base64Data = base64.replace(/^data:image\/png;base64,/, "").replace(/^data:image\/jpeg;base64,/, "");
+  // 将 base64 转换为 Blob
+  const byteCharacters = atob(base64Data);
+  const byteNumbers = new Array(byteCharacters.length);
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+  const byteArray = new Uint8Array(byteNumbers);
+  const blob = new Blob([byteArray], {type: 'image/png'});
+  // 创建 FormData 对象
+  const formData = new FormData();
+  formData.append('file', blob, fileName);
+  try {
+    // 发送请求到后端 API
+    const resData = await fetch(`https://api.daobase.ai/user/uploadFile?address=${store.state.user.address}`, {
+      method: 'POST',
+      body: formData
+    });
+    const img = await resData.json();
+    console.log('update image response::', img.data);
+    // window.open(img.data, '_blank');
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+async function captureIframe(iframe) {
+  const canvas = document.createElement('canvas');
+  canvas.width = iframe.offsetWidth;
+  canvas.height = iframe.offsetHeight;
+  const ctx = canvas.getContext('2d');
+
+  await html2canvas(iframe.contentDocument.body, {
+    canvas: canvas,
+    width: iframe.offsetWidth,
+    height: iframe.offsetHeight,
+    foreignObjectRendering: true,
+    scale: 1,
+  });
+
+  try {
+    const bitmap = await createImageBitmap(canvas);
+    const finalCanvas = document.createElement('canvas');
+    finalCanvas.width = bitmap.width;
+    finalCanvas.height = bitmap.height;
+    const finalCtx = finalCanvas.getContext('2d');
+    finalCtx.drawImage(bitmap, 0, 0);
+
+    return finalCanvas.toDataURL('image/png', 0.8);
+  } catch (error) {
+    console.error('Error creating ImageBitmap:', error);
+    return canvas.toDataURL('image/png', 0.8);
+  }
+}
+
 const doJumpMint = () => {
   if (isMobilePage()) {
     window.scrollTo({ top: 1450, behavior: 'smooth' });
@@ -1211,27 +1293,53 @@ const doMint = async () => {
   if (switchRes) {
     try {
       state.minting = true;
-      console.log('before tx time ::', new Date().toLocaleString( ).split('/').join('-'));
+      console.log(
+        'before tx time ::',
+        new Date().toLocaleString().split('/').join('-'),
+      );
       if (walletType === 'coinbase') {
-        const id = await writeContracts(smartWalletConfig, {
-          contracts: [
-            {
-              address: badgeAddress,
-              abi: badgeABI,
-              functionName: "safeMint",
-              args: [],
-            },
-          ],
-          capabilities: { 
-            paymasterService: { 
-              url: `${process.env.VUE_APP_PAYMASTER_RPC}`,
-            } 
-          } 
+        const coinbaseWalletConnector = connectors.find(
+          (connector) => connector.id === 'coinbaseWalletSDK',
+        );
+        const provider = await coinbaseWalletConnector.getProvider({
+          chainId: base.id,
         });
+        const signerName = provider?.signer?.constructor?.name;
+        console.log('signer name::', signerName);
+        if (signerName === 'SCWSigner') {
+          const id = await writeContracts(smartWalletConfig, {
+            chainId: base.id,
+            contracts: [
+              {
+                address: badgeAddress,
+                abi: badgeABI,
+                functionName: 'safeMint',
+                args: [],
+              },
+            ],
+            capabilities: {
+              paymasterService: {
+                url: `${process.env.VUE_APP_PAYMASTER_RPC}`,
+              },
+            },
+          });
+        } else {
+          // mobile coinbase wallet WalletLinkSigner
+          const id = await writeContract(smartWalletConfig, {
+            chainId: base.id,
+            address: badgeAddress,
+            abi: badgeABI,
+            functionName: 'safeMint',
+            args: [],
+          });
+        }
         // mittContractBadge();
       } else {
         const tx = await mintBadge(contracts.mintBadge.address);
-        console.log('after tx time ::', new Date().toLocaleString( ).split('/').join('-'));
+        console.log(
+          'after tx time ::',
+          new Date().toLocaleString().split('/').join('-'),
+        );
         console.log('tx:', tx);
         mittContractBadge(true);
         await tx.wait();
@@ -1248,7 +1356,7 @@ const doMint = async () => {
         type: 'error',
         text: 'mint badge error: ' + JSON.stringify(error),
       });
-      console.error("coinbase error::", error);
+      console.error('coinbase error::', error);
     }
   }
 };
@@ -1269,15 +1377,21 @@ const getRankScore = async () => {
 
 const switchBaseChain = async () => {
   try {
-    const res = await switchEthChain(chains.Base);
-    console.log('switch to base chain::', res);
-    if (!res) {
-      notify({
-        type: 'error',
-        text: 'Switch to Base chain to mint your badge!',
-      });
+    if (walletType === 'coinbase') {
+      await switchChain(smartWalletConfig, { chainId: base.id });
+      console.log('coinbase wallet switch chain.');
+      return true;
+    } else {
+      const res = await switchEthChain(chains.Base);
+      console.log('switch to base chain::', res);
+      if (!res) {
+        notify({
+          type: 'error',
+          text: 'Switch to Base chain to mint your badge!',
+        });
+      }
+      return res;
     }
-    return res;
   } catch (error) {
     notify({
       type: 'error',
@@ -1322,10 +1436,10 @@ const getMintBadgeStatus = async (showDialog) => {
             animateCelebrate();
             clearInterval(timer);
           }
-        }, 1000); 
+        }, 1000);
         setTimeout(() => {
           clearInterval(timer);
-          console.log("The mint is not queried within 10 seconds!");
+          console.log('The mint is not queried within 10 seconds!');
         }, 10000);
       }
     } else {
@@ -1369,7 +1483,7 @@ const animateCelebrate = () => {
       // colors: colors,
     });
 
-    if (x.cleared) {
+    if (x?.cleared) {
       confetti.reset();
     }
 
@@ -1398,7 +1512,10 @@ const doFlip = (item, index, flip) => {
 
 const myInviteUrl = `https://daobase.ai/mintdaobadge?inviteId=${store.state.user.visitorToken}`;
 
-const shareTweets = () => {
+const shareTweets = async () => {
+  console.log('shareTweets ---- ');
+  // const badgeImg = await captureIframe();
+  const badgeImg = 'https://tinypng.com/static/images/george-account-page.webp';
   const twTittle = `🎉 I just minted my shiny new DAO badge, and I'm ranking at ${fmoney(
     state.rankScoreData.rank,
     0,
@@ -1407,7 +1524,7 @@ const shareTweets = () => {
     `https://twitter.com/intent/tweet?text=${encodeURIComponent(
       twTittle,
     )}&url=${encodeURIComponent(myInviteUrl)}&image=${encodeURIComponent(
-      window.location.origin + '/img/brain-transparent.png',
+      badgeImg,
     )}&hashtags=${encodeURIComponent('DAOBadge #Base #DAOBase')}`,
     '_blank',
   );
@@ -1415,9 +1532,11 @@ const shareTweets = () => {
 
 const shareFarcaster = async () => {
   console.log('shareFarcaster ---- ');
-  if (state.queryAddress !== store.state.user.address) return;
-  // const badgeImg = await captureIframe();
-  const badgeImg = `https://frame.daobase.ai/api/${state.queryAddress}`;
+  const iframe = document.getElementById('myIframe');
+  const base64Png = await captureIframe(iframe);
+  console.log('base64Png ---- ::', base64Png);
+  await processAndSaveBase64AsFile(base64Png, `${store.state.user.address}.png`);
+  const badgeImg = `https://frame.daobase.ai/api/address/${store.state.user.address}`;
   const fcTittle = `🎉 I just minted my shiny new DAO badge, and I'm ranking at ${fmoney(
     state.rankScoreData.rank,
     0,

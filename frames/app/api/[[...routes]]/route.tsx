@@ -4,7 +4,7 @@ import { Button, Frog, TextInput, parseEther } from "frog";
 import { devtools } from "frog/dev";
 import { handle } from "frog/next";
 import { serveStatic } from "frog/serve-static";
-import { badgeABI } from "./abi";
+// import { badgeABI } from "./abi";
 import { privateKeyToAccount } from "viem/accounts";
 import {
   Hex,
@@ -20,6 +20,7 @@ const CHAINID = "11155111";
 
 const bundlerUrl = `https://bundler.biconomy.io/api/v2/${CHAINID}/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44`;
 import { createSystem, colors } from "frog/ui";
+import { isValidEthAddress, shortEthAddress} from "@/app/utils";
 
 const { Box, Columns, Divider, Heading, Spacer, Image, Text, VStack, HStack, vars } = createSystem({
   colors: colors.dark,
@@ -41,17 +42,15 @@ const app = new Frog({
 });
 
 
-app.frame("/:address", async (c) => {
+app.frame("/address/:address", async (c) => {
 
   let userAddress = '0xf43f7d19a81087de6fbf1c5d33e4b946202d9a15';
-
   const paramsAddress = c.req.param('address');
 
-  // @ts-ignore
-  const isValidAddress = (address) => /^(0x)?[0-9a-fA-F]{40}$/.test(address);
-
-  if (isValidAddress(paramsAddress)) {
+  if (isValidEthAddress(paramsAddress)) {
     userAddress = paramsAddress;
+  } else {
+    console.log('Invalid query ...');
   }
 
   console.log('userAddress ----- ::', userAddress);
@@ -67,15 +66,21 @@ app.frame("/:address", async (c) => {
   const { score, rank, rankRatio } = resRankScore.data;
   console.log('resRankScore --- ::', resRankScore);
 
+  // let userName = name;
+  let showImg = logo;
+
+  if (logo.includes('cdn.stamp.fyi')) {
+    showImg = `https://effigy.im/a/${userAddress}.png`;
+  }
+
   return c.res({
     // action: "/create_account",
     image: (
       <Box grow backgroundColor="background" padding="56">
         <VStack gap="4">
-          {/* TODO: Ledger X Frog */}
-          <Image src={logo} width="80"></Image>
+          <Image src={showImg} width="80"></Image>
           <Text color="text" size="32">
-           {name}
+           { isValidEthAddress(name) ? shortEthAddress(name) : name }
           </Text>
           <Text color="text400" size="14">
            {description}
@@ -86,12 +91,13 @@ app.frame("/:address", async (c) => {
           <Text color="text" size="24">
             DAO Badge
           </Text>
+          <Spacer size="10" />
           <HStack gap="8">
             <VStack gap="4" alignVertical="center">
               <HStack gap="8">
               <VStack gap="4">
                 <Text color="text" size="20">
-                  {daos.length}
+                  {daos.length || '0'}
                 </Text>
                 <Text color="text300" size="12">
                   Related DAOs
@@ -99,7 +105,7 @@ app.frame("/:address", async (c) => {
               </VStack>
               <VStack gap="4" alignHorizontal="center">
                 <Text color="text" size="20">
-                  {proposalsCreated}
+                  {proposalsCreated || '0'}
                 </Text>
                 <Text color="text300" size="12">
                   Votes
@@ -109,7 +115,7 @@ app.frame("/:address", async (c) => {
               <HStack gap="8">
                 <VStack gap="4">
                   <Text color="text" size="20">
-                    {proposals}
+                    {proposals || '0'}
                   </Text>
                   <Text color="text300" size="12">
                     Proposals
@@ -117,7 +123,7 @@ app.frame("/:address", async (c) => {
                 </VStack>
                 <VStack gap="4" alignHorizontal="center">
                   <Text color="text" size="20">
-                    {delegations}
+                    {delegations || '0'}
                   </Text>
                   <Text color="text300" size="12">
                     delegations
@@ -175,94 +181,17 @@ app.frame("/:address", async (c) => {
   });
 });
 
-// app.frame("/create_account", async (c) => {
+const badgeAddress = '0x7721693d0529199d4B68aB4c00f1213b16092Bf9';
 
-//   const { frameData } = c;
-//   const fid = frameData?.fid;
-//   const messageHash = frameData?.messageHash;
-
-//   if (!messageHash) {
-//     return c.res({
-//       action: "/",
-//       image: (
-//         <div
-//           style={{
-//             color: "white",
-//             fontSize: 60,
-//             marginTop: 30,
-//           }}
-//         >
-//           ERROR - Invalid Frame message
-//         </div>
-//       ),
-//       // imageOptions: { height: 1200, width: 1200 },
-//       intents: [<Button>Go to the previous frame</Button>],
-//     });
-//   }
-
-//   //@ts-ignore
-//   const account = privateKeyToAccount(privateKey);
-//   const client = createWalletClient({
-//     account,
-//     chain: sepolia,
-//     transport: http(),
-//   });
-//   const eoa = client.account.address;
-//   console.log(`EOA address: ${eoa}, connected FID ${fid}`);
-
-//   // ------ 2. Create biconomy smart account instance
-//   const smartAccount = await createSmartAccountClient({
-//     signer: client,
-//     bundlerUrl,
-//     biconomyPaymasterApiKey: paymasterApiKey,
-//     index: fid,
-//   });
-//   const scwAddress = await smartAccount.getAccountAddress();
-//   console.log("SCW Address", scwAddress);
-
-//   const nftAddress = "0x7721693d0529199d4B68aB4c00f1213b16092Bf9";
-//   const parsedAbi = parseAbi(["function safeMint()"]);
-//   const nftData = encodeFunctionData({
-//     abi: parsedAbi,
-//     functionName: "safeMint",
-//     args: [],
-//   });
-
-//   const userOpResponse = await smartAccount.sendTransaction(
-//     {
-//       to: nftAddress,
-//       data: nftData,
-//     },
-//     {
-//       paymasterServiceData: {
-//         mode: PaymasterMode.SPONSORED,
-//       },
-//     }
-//   );
-//   const { transactionHash } = await userOpResponse.waitForTxHash();
-//   console.log("Transaction Hash", transactionHash);
-
-//   return c.res({
-//     action: "/",
-//     image: (
-//       <Box grow alignVertical="center" backgroundColor="purple100" padding="32">
-//         <VStack gap="4">
-//           <Heading>Transaction deployed</Heading>
-//           <Text color="red800" size="16">
-//             {`${transactionHash}`}
-//           </Text>
-//         </VStack>
-//       </Box>
-//     ),
-//     // imageOptions: { height: 1200, width: 1200 },
-//     intents: [
-//       <Button>Go back</Button>,
-//       <Button.Link href={`https://basescan.org/address/${scwAddress}`}>
-//         Transaction in explorer
-//       </Button.Link>,
-//     ],
-//   });
-// });
+const badgeABI = [
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'safeMint',
+    outputs: [],
+  },
+];
 
 app.transaction("/mint", (c) => {
   // Contract transaction response.
@@ -270,7 +199,7 @@ app.transaction("/mint", (c) => {
     abi: badgeABI,
     chainId: "eip155:8453",
     functionName: "safeMint",
-    to: "0x7721693d0529199d4B68aB4c00f1213b16092Bf9",
+    to: badgeAddress,
     args: [],
   });
 });
