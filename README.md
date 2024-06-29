@@ -152,7 +152,7 @@ yarn build
   Farcaster Page：[https://warpcast.com/~/developers/frames?url=https%3A%2F%2Fframe.daobase.ai%2Fapi%2F0xe9ff9e087d10266aa4afb352faea299d4adcd24d](https://warpcast.com/~/developers/frames?url=https%3A%2F%2Fframe.daobase.ai%2Fapi%2F0xe9ff9e087d10266aa4afb352faea299d4adcd24d)
 
 * **DAO Badge Introduction Video**：
-* **DAO Badge Claiming Tutorial Video**:[https://daobase-public.s3.ap-east-1.amazonaws.com/mint_badge.mp4](https://daobase-public.s3.ap-east-1.amazonaws.com/mint_badge.mp4)
+* **DAO Badge Claiming Tutorial Video**:[ ·https://daobase-public.s3.ap-east-1.amazonaws.com/DAOBadge_Mint.mp4](https://daobase-public.s3.ap-east-1.amazonaws.com/mint_badge.mp4)
 * **DAO Badge Claiming Text Guide**:[https://docs.daobase.ai/daobase/tutorials-and-guides/how-to-claim-the-dao-badges](https://docs.daobase.ai/daobase/tutorials-and-guides/how-to-claim-the-dao-badges)
   
 **⚠️ *Warning: Claiming DAOBadgeX may result in sudden bursts of joy and unexpected applause from your peers.* 👀**
