@@ -143,7 +143,9 @@ yarn build
 
 ## Demo Links
 
-* **DAO Badge Playground**:[ https://badge.daobase.ai/](https://badge.daobase.ai/)You can test different badge styles by entering various addresses, for example:[](https://badge.daobase.ai/)[https://badge.daobase.ai/?wallet=0xe9ff9e087d10266aa4afb352faea299d4adcd24d](https://badge.daobase.ai/?wallet=0xe9ff9e087d10266aa4afb352faea299d4adcd24d)
+* **DAO Badge Playground**:[ https://badge.daobase.ai/](https://badge.daobase.ai/)
+
+  You can test different badge styles by entering various addresses, for example:[](https://badge.daobase.ai/)[https://badge.daobase.ai/?wallet=0xe9ff9e087d10266aa4afb352faea299d4adcd24d](https://badge.daobase.ai/?wallet=0xe9ff9e087d10266aa4afb352faea299d4adcd24d)
 * **DAOBadge Contract Address**:[https://basescan.org/address/0x7721693d0529199d4B68aB4c00f1213b16092Bf9](https://basescan.org/address/0x7721693d0529199d4B68aB4c00f1213b16092Bf9)
 * **DAOBase DAO Badge Claiming** 👇
 
@@ -151,7 +153,7 @@ yarn build
   
   Farcaster Page：[https://warpcast.com/~/developers/frames?url=https%3A%2F%2Fframe.daobase.ai%2Fapi%2Faddress%2F0xdf9b0d723776972c5cae27fdb4f3ea827a5cf283](https://warpcast.com/~/developers/frames?url=https%3A%2F%2Fframe.daobase.ai%2Fapi%2Faddress%2F0xdf9b0d723776972c5cae27fdb4f3ea827a5cf283)
 
-* **DAO Badge Introduction Video**：
+* **DAO Badge Introduction Video**:[https://drive.google.com/file/d/1-OO1HtCSCA1CyQv7UiAXIlMPurEOgn99/view](https://drive.google.com/file/d/1-OO1HtCSCA1CyQv7UiAXIlMPurEOgn99/view)
 * **DAO Badge Claiming Tutorial Video**:[ ·https://daobase-public.s3.ap-east-1.amazonaws.com/DAOBadge_Mint.mp4](https://daobase-public.s3.ap-east-1.amazonaws.com/mint_badge.mp4)
 * **DAO Badge Claiming Text Guide**:[https://docs.daobase.ai/daobase/tutorials-and-guides/how-to-claim-the-dao-badges](https://docs.daobase.ai/daobase/tutorials-and-guides/how-to-claim-the-dao-badges)
   
