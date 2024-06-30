@@ -1,4 +1,4 @@
-## (⌐■_■) Introducing DAOBadgeX: A Customized On-Chain Reputation for Web3 Governance Users
+## (⌐■_■) Introducing DAOBadgeX: A Customized On-Chain Reputation System for Web3 Governance Users
 
 **"Decentralization isn't just a technology trend, it's a social evolution." - Naval Ravikant**
 
@@ -6,7 +6,7 @@ In the world of Web3, DAOs are becoming standard across native projects, with ov
 
 **"Reputation is the shadow. Character is the tree."**
 
-Building upon our established reputation framework encompassing various dimensions of DAO evaluation, today we introduce DAOBadgeX. Created by DAOBase and designed by Daniel Aguilar (@protozoo), DAOBadgeX is a pioneering on-chain reputation system tailored for Web3 governance users. It functions as a dynamic NFT that evolves automatically based on your DAO engagement, covering basic information, DAO memberships, voting power, proposals, votes, and delegations. This marks the first DID and on-chain reputation system designed specifically for DAO governance users, offering the most straightforward way to understand who you are through data. We may not have met you, but your past experiences are telling your story and defining who you are.
+Building upon our established reputation framework encompassing various dimensions of DAO evaluation, today we introduce DAOBadgeX. Created by DAOBase and designed by Daniel Aguilar (@protozoo), DAOBadgeX is a pioneering on-chain reputation system tailored for Web3 governance users. It functions as a dynamic NFT that evolves automatically based on your DAO engagement, covering basic information, DAOs, voting power, proposals, votes, and delegations. This marks the first DID and on-chain reputation system designed specifically for DAO governance users, offering the most straightforward way to understand who you are through data. We may not have met you, but your past experiences are telling your story and defining who you are.
 
 ![](https://lh7-us.googleusercontent.com/docsz/AD_4nXedBAMyVXMJFKFtzp5BEi_UpXGpdC4UNw3Lzq9SYlImc0-OKGwoUwRbFiZSYl5FQWBtVtCaleMRXQIaQd-rLV65ZA1nFP-r8Mj4wDWVGP0YLdCuk3XsjJQlB2kJy9edpl0nD8j8rdjt0g3YHzviAzHSoMo?key=yX7C0xQkKNnkWVVuz9FDYw)
 
