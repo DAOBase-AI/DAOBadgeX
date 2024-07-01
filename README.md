@@ -143,7 +143,7 @@ yarn build
 
 ## Demo Links
 
-* [**DAO Badge Playground**](https://badge.daobase.ai/)You can test different badge styles by entering various addresses, for [example](https://badge.daobase.ai/?wallet=0xe9ff9e087d10266aa4afb352faea299d4adcd24d):[ ](https://badge.daobase.ai/)
+* [**DAO Badge Playground**](https://badge.daobase.ai/)You can test different badge styles by entering various addresses, for example, click [here](https://badge.daobase.ai/?wallet=0xe9ff9e087d10266aa4afb352faea299d4adcd24d).[ ](https://badge.daobase.ai/)
 
 * [**DAOBadge Contract Address**](https://basescan.org/address/0x7721693d0529199d4B68aB4c00f1213b16092Bf9)
 * DAOBase DAO Badge Claiming 👇
