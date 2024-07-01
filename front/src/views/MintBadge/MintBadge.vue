@@ -931,9 +931,9 @@
         </div>
       </transition>
     </teleport>
-    <div v-if="store.state.user.address !== '' && !state.isInvited">
+    <!-- <div v-if="store.state.user.address !== '' && !state.isInvited">
       <Cypher />
-    </div>
+    </div> -->
     <Footer />
   </div>
 </template>

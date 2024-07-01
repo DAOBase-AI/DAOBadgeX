@@ -85,7 +85,7 @@ export const doLogin = async (
       nonce,
       signature,
       walletType: isTezos ? 'Beacon' : (isCoinbase ? 'Coinbase' : undefined),
-      inviteCode: '',
+      inviteCode: urlInviteId,
     });
     console.log('signLogin::', res);
     const { authorization, avatarUrl, email, id, name, inviteCode } = res;
