@@ -153,6 +153,7 @@ yarn build
   
   Farcaster Page：[https://warpcast.com/~/developers/frames?url=https%3A%2F%2Fframe.daobase.ai%2Fapi%2Faddress%2F0xdf9b0d723776972c5cae27fdb4f3ea827a5cf283](https://warpcast.com/~/developers/frames?url=https%3A%2F%2Fframe.daobase.ai%2Fapi%2Faddress%2F0xdf9b0d723776972c5cae27fdb4f3ea827a5cf283)
 
+* **DAO Badge introduction Video**:
 * **DAO Badge Claiming Tutorial Video**:[https://drive.google.com/file/d/1-OO1HtCSCA1CyQv7UiAXIlMPurEOgn99/view](https://drive.google.com/file/d/1-OO1HtCSCA1CyQv7UiAXIlMPurEOgn99/view)
 * **DAO Badge Claiming Text Guide**:[https://docs.daobase.ai/daobase/tutorials-and-guides/how-to-claim-the-dao-badges](https://docs.daobase.ai/daobase/tutorials-and-guides/how-to-claim-the-dao-badges)
   
