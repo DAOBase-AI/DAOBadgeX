@@ -975,7 +975,8 @@ import { switchChain, writeContract } from '@wagmi/core';
 import { base } from '@wagmi/core/chains';
 import { useConnect } from '@wagmi/vue';
 import html2canvas from 'html2canvas';
-import domtoimage from 'dom-to-image';
+import mintBadgeAbi from '@/constants/contract/Badge.json';
+// import domtoimage from 'dom-to-image';
 
 const { connectors } = useConnect();
 const $router = useRouter();
@@ -990,15 +991,15 @@ const isMobile = isMobilePage();
 const walletType = getWalletType();
 
 const badgeAddress = '0x7721693d0529199d4B68aB4c00f1213b16092Bf9';
-const badgeABI = [
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [],
-    name: 'safeMint',
-    outputs: [],
-  },
-];
+// const badgeABI = [
+//   {
+//     stateMutability: 'nonpayable',
+//     type: 'function',
+//     inputs: [],
+//     name: 'safeMint',
+//     outputs: [],
+//   },
+// ];
 
 const state = reactive({
   userInfo: {
@@ -1198,7 +1199,6 @@ async function processAndSaveBase64AsFile(base64, fileName) {
     });
     const img = await resData.json();
     console.log('update image response::', img.data);
-    // window.open(img.data, '_blank');
   } catch (error) {
     console.error('Error:', error);
   }
@@ -1216,6 +1216,7 @@ async function captureIframe(iframe) {
     height: iframe.offsetHeight,
     foreignObjectRendering: true,
     scale: 1,
+    backgroundColor: null,
   });
 
   try {
@@ -1226,10 +1227,10 @@ async function captureIframe(iframe) {
     const finalCtx = finalCanvas.getContext('2d');
     finalCtx.drawImage(bitmap, 0, 0);
 
-    return finalCanvas.toDataURL('image/png', 0.8);
+    return finalCanvas.toDataURL('image/jpeg', 0.8);
   } catch (error) {
     console.error('Error creating ImageBitmap:', error);
-    return canvas.toDataURL('image/png', 0.8);
+    return canvas.toDataURL('image/jpeg', 0.8);
   }
 }
 
@@ -1273,15 +1274,25 @@ const doMint = async () => {
         const provider = await coinbaseWalletConnector.getProvider({
           chainId: base.id,
         });
-        const signerName = provider?.signer?.constructor?.name;
-        console.log('signer name::', signerName);
-        if (signerName === 'SCWSigner') {
+        const stateManager = provider?.signer?.stateManager;
+        console.log('provider::', provider);
+        console.log('stateManager::', stateManager);
+        if (!stateManager) {
+          // mobile coinbase wallet WalletLinkSigner
+          const id = await writeContract(smartWalletConfig, {
+            chainId: base.id,
+            address: badgeAddress,
+            abi: mintBadgeAbi.abi,
+            functionName: 'safeMint',
+            args: [],
+          });
+        } else {
           const id = await writeContracts(smartWalletConfig, {
             chainId: base.id,
             contracts: [
               {
                 address: badgeAddress,
-                abi: badgeABI,
+                abi: mintBadgeAbi.abi,
                 functionName: 'safeMint',
                 args: [],
               },
@@ -1292,19 +1303,10 @@ const doMint = async () => {
               },
             },
           });
-        } else {
-          // mobile coinbase wallet WalletLinkSigner
-          const id = await writeContract(smartWalletConfig, {
-            chainId: base.id,
-            address: badgeAddress,
-            abi: badgeABI,
-            functionName: 'safeMint',
-            args: [],
-          });
         }
         // mittContractBadge();
       } else {
-        const tx = await mintBadge(contracts.mintBadge.address);
+        const tx = await mintBadge(badgeAddress);
         console.log(
           'after tx time ::',
           new Date().toLocaleString().split('/').join('-'),
@@ -1348,7 +1350,7 @@ const switchBaseChain = async () => {
   try {
     if (walletType === 'coinbase') {
       await switchChain(smartWalletConfig, { chainId: base.id });
-      console.log('coinbase wallet switch chain.');
+      console.log('coinbase mobile wallet switch base chain.');
       return true;
     } else {
       const res = await switchEthChain(chains.Base);
@@ -1981,14 +1983,14 @@ body {
   transform: rotate3d(0, 1, 0, 180deg);
   -ms-transform: rotate3d(0, 1, 0, 180deg); /* IE 9 */
   -moz-transform: rotate3d(0, 1, 0, 180deg); /* Firefox */
-  -webkit-transform: rotate3d(0, 1, 0, 180deg); /* Safari & Chrome */
+  -webkit-transform: rotate3d(0, 1, 0, 180deg); /* Safari 和 Chrome */
   z-index: 8;
 }
 .card-flip .back {
   transform: rotate3d(0, 1, 0, 0deg);
   -ms-transform: rotate3d(0, 1, 0, 0deg); /* IE 9 */
   -moz-transform: rotate3d(0, 1, 0, 0deg); /* Firefox */
-  -webkit-transform: rotate3d(0, 1, 0, 0deg); /* Safari & Chrome */
+  -webkit-transform: rotate3d(0, 1, 0, 0deg); /* Safari 和 Chrome */
   z-index: 10;
 }
 
